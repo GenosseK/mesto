@@ -1,0 +1,97 @@
+@import url(../vendor/normalize.css);
+@import url(../vendor/fonts.css);
+
+.page {
+    margin: 0 auto;
+    padding: 0;
+    width: 100%;
+    background-color: #000000;
+    font-family: 'Inter', sans-serif, Arial;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-text-size-adjust: 100%;
+    -ms-text-size-adjust: 100%;
+    -moz-text-size-adjust: 100%;
+    text-rendering: optimizeLegibility;
+}
+
+.header {
+    max-width: 880px;
+    margin: 0 auto;
+    padding-top: 45px;
+    border-bottom: 1px solid rgba(84, 84, 84, .7);
+}
+
+.header__logo {
+    width: 142px;
+    margin-left: 0;
+    padding-bottom: 41px;
+}
+
+.profile {
+    display: flex;
+    flex-direction: row;
+    max-width: 880px;
+    margin: 48px auto 0;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.profile__info {
+    display: flex;
+    justify-content: space-between;
+} 
+
+/* .profile__description {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+} */
+
+.profile__avatar {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+}
+
+.profile__user {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 18px;
+}
+
+.profile__name {
+    margin: 0;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 42px;
+    line-height: 48px;
+    color: #FFFFFF;
+    max-width: 294px;
+    text-overflow: ellipsis;
+}
+
+.profile__edit-button {
+    height: 24px;
+    width: 24px;
+    background-image: url(../images/Edit\ Button.svg);
+    background-color: transparent;
+    background-size: cover;
+    border: none;
+    padding: 0;
+}
+
+.profile__job {
+    margin: 0;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 22px;
+    color: #FFFFFF;
+    max-width: 336px;
+    margin-top: 16px;
+}
