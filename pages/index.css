@@ -308,8 +308,20 @@
     background-color: rgba(0,0,0,.5);
     z-index: 2;
     position: fixed;
-    visibility: visible;
     inset: 0;
+    visibility: hidden;
+}
+
+.popup__opened {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0,0,0,.5);
+    z-index: 2;
+    position: fixed;
+    inset: 0;
+    opacity: 1;
+    visibility: visible;
 }
 
 .popup__container {
