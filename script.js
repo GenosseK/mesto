@@ -24,8 +24,18 @@ saveButton.addEventListener('click', function (event) {
   profileName.textContent = nameInput.value;
   profileDescription.textContent = descriptionInput.value;
   popup.classList.remove('popup__opened');
+  popup.classList.add("popup");
 });
 
 closeButton.addEventListener('click', function () {
   popup.classList.remove('popup__opened');
+});
+
+const likeButton = document.querySelectorAll('.element__button-like');
+
+likeButton.forEach(button => {
+  button.addEventListener('click', function() {
+    button.classList.toggle('element__button-like');
+    button.classList.toggle('element__button-like_active');
+  });
 });
