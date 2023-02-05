@@ -1,5 +1,5 @@
 .element__button-like {
-    background: transparent url(../images/Vector.svg) 50%/22px no-repeat;
+    background: transparent url(../../../images/like_inactive.svg) 50%/22px no-repeat;
     border: none;
     height: 22px;
     width: 22px;
