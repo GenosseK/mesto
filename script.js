@@ -9,6 +9,8 @@ closeButton.addEventListener("click", function () {
 const editButton = document.querySelector('.profile__edit-button');
 
 editButton.addEventListener('click', function () {
+  nameInput.value = profileName.textContent;
+  descriptionInput.value = profileDescription.textContent;
   popup.classList.remove('popup');
   popup.classList.add('popup__opened');
 });
@@ -35,7 +37,7 @@ descriptionInput.addEventListener('input', checkInputs);
 
 saveButton.addEventListener('click', function (event) {
   event.preventDefault();
-  if (!saveButton.classList.contains('popup__btn-save_disabled') && (nameInput.value !== initialNameValue || descriptionInput.value !== initialDescriptionValue)) {
+  if (!saveButton.classList.contains('popup__btn-save_disabled')) {
     profileName.textContent = nameInput.value;
     profileDescription.textContent = descriptionInput.value;
     initialNameValue = nameInput.value;
