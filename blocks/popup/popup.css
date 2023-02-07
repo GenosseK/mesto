@@ -7,4 +7,5 @@
     position: fixed;
     inset: 0;
     visibility: hidden;
+    opacity: 0;
 }
