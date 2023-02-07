@@ -21,33 +21,17 @@ const descriptionInput = document.querySelector('#description');
 const profileName = document.querySelector('.profile__name');
 const profileDescription = document.querySelector('.profile__job');
 
-let initialNameValue = nameInput.value;
-let initialDescriptionValue = descriptionInput.value;
-
-function checkInputs() {
-  if (nameInput.value.length >= 2 && nameInput.value.length < 40 && descriptionInput.value.length >= 2 && descriptionInput.value.length < 40) {
-    saveButton.classList.remove('popup__btn-save_disabled');
-  } else {
-    saveButton.classList.add('popup__btn-save_disabled');
-  }
-}
-
-nameInput.addEventListener('input', checkInputs);
-descriptionInput.addEventListener('input', checkInputs);
 
 saveButton.addEventListener('click', function (event) {
   event.preventDefault();
   if (!saveButton.classList.contains('popup__btn-save_disabled')) {
     profileName.textContent = nameInput.value;
     profileDescription.textContent = descriptionInput.value;
-    initialNameValue = nameInput.value;
-    initialDescriptionValue = descriptionInput.value;
     popup.classList.remove('popup__opened');
     popup.classList.add("popup");
   }
 });
 
-checkInputs();
 
 closeButton.addEventListener('click', function () {
   popup.classList.remove('popup__opened');
