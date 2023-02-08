@@ -20,57 +20,58 @@
                     <div class="profile__description">
                         <div class="profile__user">
                             <h1 class="profile__name">Жак-Ив Кусто</h1>
-                            <button class="profile__edit-button"></button>
+                            <button aria-label="Редактировать" type="button" class="profile__edit-button"></button>
                         </div>
                         <p class="profile__job">Исследователь океана</p>
                     </div>
                 </div>
-                <button class="profile__add-button"></button>
+                <button aria-label="Добавить карточку" type="button" class="profile__add-button"></button>
             </section>
             <section class="elements">
                 <ul class="elements__grid">
-                    <figure class="element">
+                    <li class="element">
                         <img src="images/kirill-pershin-1088404-unsplash.jpg" alt="Карачаевск" class="element__image">
-                        <figcaption class="element__info">
+                        <div class="element__info">
                             <h2 class="element__caption">Карачаевск</h2>
-                            <button class="element__button-like"></button>
-                        </figcaption>
-                    </figure>
-                    <figure class="element">
-                        <img src="images/kirill-pershin-1404681-unsplash.png" alt="Гора Эльбрус" class="element__image">
-                        <figcaption class="element__info">
+                            <button aria-label="Нравится" type="button" class="element__button-like"></button>
+                        </div>
+                    </li>
+                    <li class="element">
+                        <img src="images/kirill-pershin-1404681-unsplash.jpg" alt="Гора Эльбрус" class="element__image">
+                        <div class="element__info">
                             <h2 class="element__caption">Гора Эльбрус</h2>
-                            <button class="element__button-like"></button>
-                        </figcaption>
-                    </figure>
-                    <figure class="element">
-                        <img src="images/kirill-pershin-1556355-unsplash.png" alt="" class="element__image">
-                        <figcaption class="element__info">
+                            <button aria-label="Нравится" type="button" class="element__button-like"></button>
+                        </div>
+                    </li>
+                    <li class="element">
+                        <img src="images/kirill-pershin-1556355-unsplash.jpg" alt="Домбай" class="element__image">
+                        <div class="element__info">
                             <h2 class="element__caption">Домбай</h2>
-                            <button class="element__button-like"></button>
-                        </figcaption>
-                    </figure>
-                    <figure class="element">
-                        <img src="images/kirill-pershin-1404681-unsplash.png" alt="" class="element__image">
-                        <figcaption class="element__info">
+                            <button aria-label="Нравится" type="button" class="element__button-like"></button>
+                        </div>
+                    </li>
+                    <li class="element">
+                        <img src="images/kirill-pershin-1404681-unsplash.jpg" alt="Гора Эльбрус" class="element__image">
+                        <div class="element__info">
                             <h2 class="element__caption">Гора Эльбрус</h2>
-                            <button class="element__button-like"></button>
-                        </figcaption>
-                    </figure>
-                    <figure class="element">
-                        <img src="images/kirill-pershin-1556355-unsplash.png" alt="" class="element__image">
-                        <figcaption class="element__info">
+                            <button aria-label="Нравится" type="button" class="element__button-like"></button>
+                        </div>
+                    </li>
+                    <li class="element">
+                        <img src="images/kirill-pershin-1556355-unsplash.jpg" alt="Домбай" class="element__image">
+                        <div class="element__info">
                             <h2 class="element__caption">Домбай</h2>
-                            <button class="element__button-like"></button>
-                        </figcaption>
-                    </figure>
-                    <figure class="element">
-                        <img src="images/kirill-pershin-1088404-unsplash.jpg" alt="" class="element__image">
-                        <figcaption class="element__info">
+                            <button aria-label="Нравится" type="button" class="element__button-like"></button>
+                        </div>
+                    </li>
+                    <li class="element">
+                        <img src="images/kirill-pershin-1088404-unsplash.jpg" alt="Карачаево-Черкесия"
+                            class="element__image">
+                        <div class="element__info">
                             <h2 class="element__caption">Карачаево-Черкесия</h2>
-                            <button class="element__button-like"></button>
-                        </figcaption>
-                    </figure>
+                            <button aria-label="Нравится" type="button" class="element__button-like"></button>
+                        </div>
+                    </li>
                 </ul>
             </section>
         </main>
@@ -79,20 +80,21 @@
         </footer>
         <div class="popup">
             <div class="popup__container">
-                <form class="popup__form">
+                <form name="profileEdit" class="popup__form">
                     <h2 class="popup__title">Редактировать профиль</h2>
                     <fieldset class="popup__fieldset">
-                        <input type="text" class="popup__input" id="name" name="userName" placeholder="Имя"
+                        <input type="text" class="popup__input" id="name" name="userName" required placeholder="Имя"
                             minlength="2" maxlength="40">
-                        <input type="text" class="popup__input" id="description" name="userDescription"
+                        <input type="text" class="popup__input" id="description" name="userDescription" required
                             placeholder="Описание" minlength="2" maxlength="40">
                     </fieldset>
-                    <button class="popup__btn-save">Сохранить</button>
+                    <button aria-label="Сохранить" type="submit" class="popup__btn-save">Сохранить</button>
                 </form>
-                <button class="popup__btn-close"></button>
+                <button aria-label="Закрыть" type="button" class="popup__btn-close"></button>
             </div>
         </div>
     </div>
     <script src="scripts/script.js"></script>
 </body>
+
 </html>

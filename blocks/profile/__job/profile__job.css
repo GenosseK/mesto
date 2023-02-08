@@ -1,6 +1,6 @@
 .profile__job {
     margin: 0;
-    font-family: 'Inter';
+    font-family: 'Inter', sans-serif, Arial;
     font-style: normal;
     font-weight: 400;
     font-size: 18px;
@@ -8,6 +8,9 @@
     color: #FFFFFF;
     max-width: 336px;
     margin-top: 16px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
 }
 
 @media screen and (max-width: 788px) {
