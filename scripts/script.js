@@ -5,7 +5,6 @@ const nameInput = document.querySelector('#name');
 const descriptionInput = document.querySelector('#description');
 const profileName = document.querySelector('.profile__name');
 const profileDescription = document.querySelector('.profile__job');
-const buttonLike = document.querySelectorAll('.element__button-like');
 const popupForm = document.querySelector('.popup__form');
 
 function closePopup() {
@@ -31,8 +30,12 @@ function formSubmitHandler(event) {
 
 popupForm.addEventListener('submit', formSubmitHandler);
 
+/*
+const buttonLike = document.querySelectorAll('.element__button-like');
+
 for (let button of buttonLike) {
   button.addEventListener('click', function () {
     button.classList.toggle('element__button-like_active');
   });
 }
+*/

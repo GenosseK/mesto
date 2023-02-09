@@ -8,5 +8,6 @@
 @media screen and (max-width: 788px) {
     .profile__user {
         gap: 10px;
+        max-width: 282px;
     }
 }
