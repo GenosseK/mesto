@@ -35,6 +35,7 @@ buttonClose.forEach(function(buttonClose) {
 
 buttonClose.addEventListener("click", closePopup);
 */
+
 function editPopup() {
   nameInput.value = profileName.textContent;
   descriptionInput.value = profileDescription.textContent;
@@ -56,6 +57,8 @@ buttonAdd.addEventListener("click", function () {
   popupAddCard.classList.add("popup_opened");
 });
 
+
+/*
 const addCardForm = document.forms.addCard;
 const elementsGrid = document.querySelector('.elements__grid');
 
@@ -84,7 +87,7 @@ addCardForm.addEventListener('submit', (event) => {
     titleInput.value = '';
     linkInput.value = '';
 });
-
+*/
 
 /*
 const buttonLike = document.querySelectorAll('.element__button-like');
