@@ -56,6 +56,34 @@ buttonAdd.addEventListener("click", function () {
   popupAddCard.classList.add("popup_opened");
 });
 
+const addCardForm = document.forms.addCard;
+const elementsGrid = document.querySelector('.elements__grid');
+
+addCardForm.addEventListener('submit', (event) => {
+    event.preventDefault();
+
+    const titleInput = addCardForm.elements.title;
+    const linkInput = addCardForm.elements.url;
+
+    const title = titleInput.value;
+    const link = linkInput.value;
+
+    const newCard = `
+        <li class="element">
+            <button type="button" class="element__button-delete"></button>
+            <img src="${link}" alt="${title}" class="element__image">
+            <div class="element__info">
+                <h2 class="element__caption">${title}</h2>
+                <button aria-label="Нравится" type="button" class="element__button-like"></button>
+            </div>
+        </li>
+    `;
+
+    elementsGrid.insertAdjacentHTML('beforeend', newCard);
+
+    titleInput.value = '';
+    linkInput.value = '';
+});
 
 
 /*
