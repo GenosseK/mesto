@@ -33,8 +33,8 @@ buttonClose.forEach(function (buttonClose) {
 
 // функция закрытия popup
 
-function closePopup(popup) {
-  popup.classList.remove('popup_opened');
+function closePopup(popupToClose) {
+  popupToClose.classList.remove('popup_opened');
 }
 
 //buttonClose.addEventListener("click", closePopup);
@@ -56,7 +56,7 @@ function formSubmitHandler(event) {
   event.preventDefault();
   profileName.textContent = nameInput.value;
   profileDescription.textContent = descriptionInput.value;
-  closePopup(popup);
+  closePopup(popupProfileEdit);
 }
 
 popupForm.addEventListener('submit', formSubmitHandler);
@@ -119,19 +119,19 @@ elementsGrid.addEventListener('click', event => {
 // функция добавления карточек
 
 const form = document.forms.addCard;
-const template = document.querySelector('.cards-template').content;
 
 function cardSubmitHandler(event) {
   event.preventDefault();
   const title = form.elements.title.value;
   const url = form.elements.url.value;
 
-  const card = template.cloneNode(true);
-  card.querySelector('.element__image').src = url;
-  card.querySelector('.element__image').alt = title;
-  card.querySelector('.element__caption').textContent = title;
+  const cardElement = cardsTemplate.cloneNode(true);
+  cardElement.querySelector('.element__image').src = url;
+  cardElement.querySelector('.element__image').alt = title;
+  cardElement.querySelector('.element__caption').textContent = title;
 
-  elementsGrid.prepend(card);
+  elementsGrid.prepend(cardElement);
+  closePopup(popupAddCard);
 }
 
 form.addEventListener('submit', cardSubmitHandler);
