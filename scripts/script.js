@@ -10,14 +10,16 @@ const profileDescription = document.querySelector('.profile__job');
 const popupForm = document.querySelector('.popup__form');
 const buttonAdd = document.querySelector('.profile__add-button');
 
-function closePopup(buttonClose) {
+// функция закрытия popup по клику на крестик
+
+function closebuttonPopup(buttonClose) {
   const popup = buttonClose.closest('.popup');
   popup.classList.remove('popup_opened');
 }
 
-buttonClose.forEach(function(buttonClose) {
-  buttonClose.addEventListener('click', function() {
-    closePopup(buttonClose);
+buttonClose.forEach(function (buttonClose) {
+  buttonClose.addEventListener('click', function () {
+    closebuttonPopup(buttonClose);
   });
 });
 
@@ -29,12 +31,16 @@ buttonClose.forEach(function(buttonClose) {
 });
 */
 
-/* function closePopup() {
-  popup.classList.remove("popup_opened");
+// функция закрытия popup
+
+function closePopup(popup) {
+  popup.classList.remove('popup_opened');
 }
 
-buttonClose.addEventListener("click", closePopup);
-*/
+//buttonClose.addEventListener("click", closePopup);
+
+
+// функция редактирования профиля
 
 function editPopup() {
   nameInput.value = profileName.textContent;
@@ -44,52 +50,94 @@ function editPopup() {
 
 buttonEdit.addEventListener('click', editPopup);
 
+// функция submit редактирования профиля
+
 function formSubmitHandler(event) {
   event.preventDefault();
   profileName.textContent = nameInput.value;
   profileDescription.textContent = descriptionInput.value;
-  closePopup()
+  closePopup(popup);
 }
 
 popupForm.addEventListener('submit', formSubmitHandler);
+
+// функция открытия popup добавления карточки
 
 buttonAdd.addEventListener("click", function () {
   popupAddCard.classList.add("popup_opened");
 });
 
+// массив с изначальными карточками, которые будет добавляться в начало grid при загрузке сраницы
 
-/*
-const addCardForm = document.forms.addCard;
+const initialCards = [
+  {
+    name: 'Архыз',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
+  },
+  {
+    name: 'Челябинская область',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
+  },
+  {
+    name: 'Иваново',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
+  },
+  {
+    name: 'Камчатка',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
+  },
+  {
+    name: 'Холмогорский район',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
+  },
+  {
+    name: 'Байкал',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
+  }
+];
+
+// функция добавления карточек из массива
+
 const elementsGrid = document.querySelector('.elements__grid');
+const cardsTemplate = document.querySelector('.cards-template').content;
 
-addCardForm.addEventListener('submit', (event) => {
-    event.preventDefault();
-
-    const titleInput = addCardForm.elements.title;
-    const linkInput = addCardForm.elements.url;
-
-    const title = titleInput.value;
-    const link = linkInput.value;
-
-    const newCard = `
-        <li class="element">
-            <button type="button" class="element__button-delete"></button>
-            <img src="${link}" alt="${title}" class="element__image">
-            <div class="element__info">
-                <h2 class="element__caption">${title}</h2>
-                <button aria-label="Нравится" type="button" class="element__button-like"></button>
-            </div>
-        </li>
-    `;
-
-    elementsGrid.insertAdjacentHTML('beforeend', newCard);
-
-    titleInput.value = '';
-    linkInput.value = '';
+initialCards.forEach(card => {
+  const cardElement = cardsTemplate.cloneNode(true);
+  cardElement.querySelector('.element__image').src = card.link;
+  cardElement.querySelector('.element__image').alt = card.name;
+  cardElement.querySelector('.element__caption').textContent = card.name;
+  elementsGrid.prepend(cardElement);
 });
-*/
 
-/*
+elementsGrid.addEventListener('click', event => {
+  if (event.target.classList.contains('element__button-delete')) {
+    const cardElement = event.target.closest('.element');
+    cardElement.remove();
+  }
+});
+
+// функция добавления карточек
+
+const form = document.forms.addCard;
+const template = document.querySelector('.cards-template').content;
+
+function cardSubmitHandler(event) {
+  event.preventDefault();
+  const title = form.elements.title.value;
+  const url = form.elements.url.value;
+
+  const card = template.cloneNode(true);
+  card.querySelector('.element__image').src = url;
+  card.querySelector('.element__image').alt = title;
+  card.querySelector('.element__caption').textContent = title;
+
+  elementsGrid.prepend(card);
+}
+
+form.addEventListener('submit', cardSubmitHandler);
+
+// функция кнопки like
+
 const buttonLike = document.querySelectorAll('.element__button-like');
 
 for (let button of buttonLike) {
@@ -97,4 +145,3 @@ for (let button of buttonLike) {
     button.classList.toggle('element__button-like_active');
   });
 }
-*/
