@@ -99,7 +99,6 @@
                 <button aria-label="Закрыть" type="button" class="popup__btn-close"></button>
             </div>
         </div>
-
         <div class="popup popup_add-card">
             <div class="popup__container">
                 <form name="addCard" class="popup__form">
@@ -115,17 +114,26 @@
                 <button aria-label="Закрыть" type="button" class="popup__btn-close"></button>
             </div>
         </div>
+        <div class="popup popup_image-viewer" id="imageViewerPopup">
+            <figure class="popup__image-container">
+                <button type="button" aria-label="Закрыть"
+                    class="popup__btn-close popup__btn-close_image-viewer"></button>
+                <img src="#" alt="#" class="popup__image">
+                <figcaption class="popup__figcaption"></figcaption>
+            </figure>
+        </div>
     </div>
-        <template class="cards-template">
-            <li class="element">
-                <button type="button" class="element__button-delete"></button>
-                <img src="#" alt="#" class="element__image">
-                <div class="element__info">
-                    <h2 class="element__caption"></h2>
-                    <button aria-label="Нравится" type="button" class="element__button-like"></button>
-                </div>
-            </li>
-        </template>
+    <template class="cards-template">
+        <li class="element">
+            <button type="button" class="element__button-delete"></button>
+            <img src="#" alt="#" class="element__image">
+            <div class="element__info">
+                <h2 class="element__caption"></h2>
+                <button aria-label="Нравится" type="button" class="element__button-like"></button>
+            </div>
+        </li>
+    </template>
+    <script src="scripts/intialCards.js"></script>
     <script src="scripts/script.js"></script>
 </body>
 

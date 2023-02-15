@@ -9,6 +9,12 @@ const profileName = document.querySelector('.profile__name');
 const profileDescription = document.querySelector('.profile__job');
 const popupForm = document.querySelector('.popup__form');
 const buttonAdd = document.querySelector('.profile__add-button');
+const elementsGrid = document.querySelector('.elements__grid');
+const cardsTemplate = document.querySelector('.cards-template').content;
+const form = document.forms.addCard;
+const imageViewerPopup = document.querySelector('#imageViewerPopup');
+const popupImage = imageViewerPopup.querySelector('.popup__image');
+const popupFigcaption = imageViewerPopup.querySelector('.popup__figcaption');
 
 // функция закрытия popup по клику на крестик
 
@@ -23,22 +29,17 @@ buttonClose.forEach(function (buttonClose) {
   });
 });
 
-/* buttonClose.forEach(function(closeBtn) {
-  closeBtn.addEventListener('click', function() {
-    const popup = closeBtn.closest('.popup');
-    popup.classList.remove('popup_opened');
-  });
-});
-*/
+// функция открытия popup
+
+function openPopup(popup) {
+  popup.classList.add('popup_opened');
+}
 
 // функция закрытия popup
 
 function closePopup(popupToClose) {
   popupToClose.classList.remove('popup_opened');
 }
-
-//buttonClose.addEventListener("click", closePopup);
-
 
 // функция редактирования профиля
 
@@ -67,39 +68,7 @@ buttonAdd.addEventListener("click", function () {
   popupAddCard.classList.add("popup_opened");
 });
 
-// массив с изначальными карточками, которые будет добавляться в начало grid при загрузке сраницы
-
-const initialCards = [
-  {
-    name: 'Архыз',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
-  },
-  {
-    name: 'Челябинская область',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
-  },
-  {
-    name: 'Иваново',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
-  },
-  {
-    name: 'Камчатка',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
-  },
-  {
-    name: 'Холмогорский район',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
-  },
-  {
-    name: 'Байкал',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
-  }
-];
-
 // функция добавления карточек из массива
-
-const elementsGrid = document.querySelector('.elements__grid');
-const cardsTemplate = document.querySelector('.cards-template').content;
 
 initialCards.forEach(card => {
   const cardElement = cardsTemplate.cloneNode(true);
@@ -118,8 +87,6 @@ elementsGrid.addEventListener('click', event => {
 
 // функция добавления карточек
 
-const form = document.forms.addCard;
-
 function cardSubmitHandler(event) {
   event.preventDefault();
   const title = form.elements.title.value;
@@ -129,6 +96,11 @@ function cardSubmitHandler(event) {
   cardElement.querySelector('.element__image').src = url;
   cardElement.querySelector('.element__image').alt = title;
   cardElement.querySelector('.element__caption').textContent = title;
+
+  const buttonLike = cardElement.querySelector('.element__button-like');
+  buttonLike.addEventListener('click', function () {
+    buttonLike.classList.toggle('element__button-like_active');
+  });
 
   elementsGrid.prepend(cardElement);
   closePopup(popupAddCard);
@@ -145,3 +117,22 @@ for (let button of buttonLike) {
     button.classList.toggle('element__button-like_active');
   });
 }
+
+// popup image-viewer
+
+elementsGrid.addEventListener('click', (event) => {
+  const target = event.target;
+  if (target.classList.contains('element__image')) {
+    popupImage.src = target.src;
+    popupImage.alt = target.alt;
+    popupFigcaption.textContent = target.alt;
+    openPopup(imageViewerPopup);
+  }
+});
+
+
+buttonClose.forEach(function (button) {
+  button.addEventListener("click", () => {
+    closePopup(imageViewerPopup);
+  });
+});
