@@ -31,7 +31,7 @@ buttonClose.forEach(function (buttonClose) {
 
 // функция открытия popup
 
-function openPopup(popup) {
+function openPopup(popupElement) {
   popupElement.classList.add('popup_opened');
 }
 
