@@ -1,4 +1,4 @@
-const popup = document.querySelector('.popup');
+const popupElement = document.querySelector('.popup');
 const popupProfileEdit = document.querySelector('.popup_profile-edit');
 const popupAddCard = document.querySelector('.popup_add-card')
 const buttonClose = document.querySelectorAll('.popup__btn-close');
@@ -18,21 +18,21 @@ const popupFigcaption = imageViewerPopup.querySelector('.popup__figcaption');
 
 // функция закрытия popup по клику на крестик
 
-function closebuttonPopup(buttonClose) {
-  const popup = buttonClose.closest('.popup');
-  popup.classList.remove('popup_opened');
+function closePopupButton(buttonClose) {
+  const popupElement = buttonClose.closest('.popup');
+  popupElement.classList.remove('popup_opened');
 }
 
 buttonClose.forEach(function (buttonClose) {
   buttonClose.addEventListener('click', function () {
-    closebuttonPopup(buttonClose);
+    closePopupButton(buttonClose);
   });
 });
 
 // функция открытия popup
 
 function openPopup(popup) {
-  popup.classList.add('popup_opened');
+  popupElement.classList.add('popup_opened');
 }
 
 // функция закрытия popup
@@ -104,6 +104,7 @@ function cardSubmitHandler(event) {
 
   elementsGrid.prepend(cardElement);
   closePopup(popupAddCard);
+  form.reset();
 }
 
 form.addEventListener('submit', cardSubmitHandler);
