@@ -46,94 +46,83 @@ function closePopup(popupToClose) {
 function editPopup() {
   nameInput.value = profileName.textContent;
   descriptionInput.value = profileDescription.textContent;
-  popupProfileEdit.classList.add('popup_opened');
+  openPopup(popupProfileEdit);
 }
 
 buttonEdit.addEventListener('click', editPopup);
 
 // функция submit редактирования профиля
 
-function formSubmitHandler(event) {
+function submitFormHandler(event) {
   event.preventDefault();
   profileName.textContent = nameInput.value;
   profileDescription.textContent = descriptionInput.value;
   closePopup(popupProfileEdit);
 }
 
-popupForm.addEventListener('submit', formSubmitHandler);
+popupForm.addEventListener('submit', submitFormHandler);
 
 // функция открытия popup добавления карточки
 
 buttonAdd.addEventListener("click", function () {
-  popupAddCard.classList.add("popup_opened");
+  openPopup(popupAddCard);;
 });
 
-// функция добавления карточек из массива
+// функция возврата карточки со слушателями
 
-initialCards.forEach(card => {
+function createCard(card) {
   const cardElement = cardsTemplate.cloneNode(true);
   cardElement.querySelector('.element__image').src = card.link;
   cardElement.querySelector('.element__image').alt = card.name;
   cardElement.querySelector('.element__caption').textContent = card.name;
-  elementsGrid.prepend(cardElement);
-});
-
-elementsGrid.addEventListener('click', event => {
-  if (event.target.classList.contains('element__button-delete')) {
-    const cardElement = event.target.closest('.element');
-    cardElement.remove();
-  }
-});
-
-// функция добавления карточек
-
-function cardSubmitHandler(event) {
-  event.preventDefault();
-  const title = form.elements.title.value;
-  const url = form.elements.url.value;
-
-  const cardElement = cardsTemplate.cloneNode(true);
-  cardElement.querySelector('.element__image').src = url;
-  cardElement.querySelector('.element__image').alt = title;
-  cardElement.querySelector('.element__caption').textContent = title;
 
   const buttonLike = cardElement.querySelector('.element__button-like');
   buttonLike.addEventListener('click', function () {
     buttonLike.classList.toggle('element__button-like_active');
   });
 
+  elementsGrid.addEventListener('click', event => {
+    if (event.target.classList.contains('element__button-delete')) {
+      const cardElement = event.target.closest('.element');
+      cardElement.remove();
+    }
+  });
+
+  const imageViewer = cardElement.querySelector('.element__image');
+  imageViewer.addEventListener('click', function () {
+    popupImage.src = card.link;
+    popupImage.alt = card.name;
+    popupFigcaption.textContent = card.name;
+    openPopup(imageViewerPopup);
+  });
+
+  return cardElement;
+}
+
+// функция добавления карточек из массива
+
+initialCards.forEach(card => {
+  const cardElement = createCard(card);
+  elementsGrid.prepend(cardElement);
+});
+
+// функция добавления карточки через popup
+
+function submitCardHandler(event) {
+  event.preventDefault();
+  const title = form.elements.title.value;
+  const url = form.elements.url.value;
+
+  const card = {
+    name: title,
+    link: url
+  };
+
+  const cardElement = createCard(card);
+
   elementsGrid.prepend(cardElement);
   closePopup(popupAddCard);
   form.reset();
 }
 
-form.addEventListener('submit', cardSubmitHandler);
-
-// функция кнопки like
-
-const buttonLike = document.querySelectorAll('.element__button-like');
-
-for (let button of buttonLike) {
-  button.addEventListener('click', function () {
-    button.classList.toggle('element__button-like_active');
-  });
-}
-
-// popup image-viewer
-
-elementsGrid.addEventListener('click', (event) => {
-  const target = event.target;
-  if (target.classList.contains('element__image')) {
-    popupImage.src = target.src;
-    popupImage.alt = target.alt;
-    popupFigcaption.textContent = target.alt;
-    openPopup(imageViewerPopup);
-  }
-});
-
-
-buttonClose.forEach(function (button) {
-  button.addEventListener("click", () => {
-    closePopup(imageViewerPopup);
-  });
-});
+form.addEventListener('submit', submitCardHandler);
