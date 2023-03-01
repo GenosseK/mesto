@@ -15,18 +15,43 @@ const formAddCard = document.forms.addCard;
 const imageViewerPopup = document.querySelector('#imageViewerPopup');
 const popupImage = imageViewerPopup.querySelector('.popup__image');
 const popupFigcaption = imageViewerPopup.querySelector('.popup__figcaption');
+const popups = document.querySelectorAll('.popup');
 
 // функция закрытия popup по клику на крестик
 
 function closePopupByCrossButton(buttonClose) {
-  const popupElement = buttonClose.closest('.popup');
-  closePopup(popupElement);
+  const openedPopup = buttonClose.closest('.popup_opened');
+  closePopup(openedPopup);
 }
 
 buttonsClose.forEach(function (buttonClose) {
   buttonClose.addEventListener('click', function () {
     closePopupByCrossButton(buttonClose);
   });
+});
+
+// функция закрытия popup по нажатию ESC
+
+function closePopupByEscapeKey(event) {
+  if (event.key === 'Escape') {
+    const openedPopup = document.querySelector('.popup_opened');
+    closePopup(openedPopup);
+  }
+}
+
+document.addEventListener('keydown', closePopupByEscapeKey);
+
+// функция закрытия popup по клику на overlay
+
+function closePopupByOverlayClick(event) {
+  if (event.target === event.currentTarget) {
+    const openedPopup = document.querySelector('.popup_opened');
+    closePopup(openedPopup);
+  }
+}
+
+popups.forEach(function (popup) {
+  popup.addEventListener('click', closePopupByOverlayClick);
 });
 
 // функция открытия popup
@@ -126,3 +151,77 @@ function submitCardHandler(event) {
 }
 
 formAddCard.addEventListener('submit', submitCardHandler);
+
+/*
+const isValid = (formElement, inputElement) => {
+  if (!inputElement.validity.valid) {
+    showInputError(formElement, inputElement, inputElement.validationMessage);
+    return false;
+  } else {
+    hideInputError(formElement, inputElement);
+    return true;
+  }
+};
+
+function submitEditProfileForm(event) {
+  event.preventDefault();
+  const isNameInputValid = isValid(formEditProfile, nameInput);
+  const isDescriptionInputValid = isValid(formEditProfile, descriptionInput);
+  if (isNameInputValid && isDescriptionInputValid) {
+    profileName.textContent = nameInput.value;
+    profileDescription.textContent = descriptionInput.value;
+    closePopup(popupProfileEdit);
+  }
+}
+
+formEditProfile.addEventListener('submit', submitEditProfileForm);
+
+function submitCardHandler(event) {
+  event.preventDefault();
+  const isTitleInputValid = isValid(formAddCard, formAddCard.elements.title);
+  const isUrlInputValid = isValid(formAddCard, formAddCard.elements.url);
+  if (isTitleInputValid && isUrlInputValid) {
+    const title = formAddCard.elements.title.value;
+    const url = formAddCard.elements.url.value;
+
+    const card = {
+      name: title,
+      link: url
+    };
+
+    const cardElement = createCard(card);
+
+    elementsGrid.prepend(cardElement);
+    closePopup(popupAddCard);
+    formAddCard.reset();
+  }
+}
+
+formAddCard.addEventListener('submit', submitCardHandler);
+
+const toggleButtonState = (buttonElement, isFormValid) => {
+  if (isFormValid) {
+    buttonElement.classList.remove('form__submit-button_disabled');
+    buttonElement.disabled = false;
+  } else {
+    buttonElement.classList.add('form__submit-button_disabled');
+    buttonElement.disabled = true;
+  }
+};
+
+const setEventListeners = (formElement, buttonElement) => {
+  const inputList = formElement.querySelectorAll('.form__input');
+  const isFormValid = formElement.checkValidity();
+  toggleButtonState(buttonElement, isFormValid);
+  Array.from(inputList).forEach((inputElement) => {
+    inputElement.addEventListener('input', () => {
+      const isFormValid = formElement.checkValidity();
+      toggleButtonState(buttonElement, isFormValid);
+      isValid(formElement, inputElement);
+    });
+  });
+};
+
+setEventListeners(formEditProfile, formEditProfile.querySelector('.form__submit-button'));
+setEventListeners(formAddCard, formAddCard.querySelector('.form__submit-button'));
+*/
