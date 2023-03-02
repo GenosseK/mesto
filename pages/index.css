@@ -46,9 +46,29 @@
 }
 
 .popup__input-error {
-    display: block;
+    display: none;
     position: absolute;
     color: #f00;
     font-size: 12px;
-    line-height: 14px;
+    line-height: 15px;
+    font-weight: 400;
+    font-family: 'Inter';
+    font-style: normal;
+}
+
+.popup__input-error_visible {
+    display: block;
+}
+
+
+.popup__btn-save_disabled {
+    background-color: #fff;
+    border: 1px solid #000000;
+    color: #000000;
+    opacity: .2;
+}
+
+.popup__btn-save_disabled:hover {
+    opacity: .2;
+    cursor: default;
 }
