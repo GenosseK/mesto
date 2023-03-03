@@ -39,8 +39,6 @@ function closePopupByEscapeKey(event) {
   }
 }
 
-
-
 // функция закрытия popup по клику на overlay
 
 function closePopupByOverlayClick(event) {
@@ -51,7 +49,7 @@ function closePopupByOverlayClick(event) {
 }
 
 popups.forEach(function (popup) {
-  popup.addEventListener('click', closePopupByOverlayClick);
+  popup.addEventListener('mousedown', closePopupByOverlayClick);
 });
 
 // функция открытия popup
@@ -78,17 +76,6 @@ function openEditProfileForm() {
 
 buttonEdit.addEventListener('click', openEditProfileForm);
 
-// функция submit редактирования профиля
-/*
-function submitEditProfileForm(event) {
-  event.preventDefault();
-  profileName.textContent = nameInput.value;
-  profileDescription.textContent = descriptionInput.value;
-  closePopup(popupProfileEdit);
-}
-
-formEditProfile.addEventListener('submit', submitEditProfileForm);
-*/
 // функция открытия popup добавления карточки
 
 buttonOpenAddCardPopup.addEventListener("click", function () {
@@ -133,59 +120,7 @@ initialCards.forEach(card => {
   elementsGrid.prepend(cardElement);
 });
 
-// функция добавления карточки через popup
-/*
-function submitCardHandler(event) {
-  event.preventDefault();
-  const title = formAddCard.elements.title.value;
-  const url = formAddCard.elements.url.value;
-
-  const card = {
-    name: title,
-    link: url
-  };
-
-  const cardElement = createCard(card);
-
-  elementsGrid.prepend(cardElement);
-  closePopup(popupAddCard);
-  formAddCard.reset();
-}
-
-formAddCard.addEventListener('submit', submitCardHandler);
-*/
-// экспериментальные функции
-
-
-
-
-
-/*
-
-
-const showInputError = (formElement, inputElement, errorMessage) => {
-  const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
-  inputElement.classList.add('popup__input_type_error');
-  errorElement.textContent = errorMessage;
-  errorElement.classList.add('popup__input-error_visible');
-};
-
-const hideInputError = (formElement, inputElement) => {
-  const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
-  inputElement.classList.remove('popup__input_type_error');
-  errorElement.classList.remove('popup__input-error_visible');
-  errorElement.textContent = '';
-};
-
-const isValid = (formElement, inputElement) => {
-  if (!inputElement.validity.valid) {
-    showInputError(formElement, inputElement, inputElement.validationMessage);
-    return false;
-  } else {
-    hideInputError(formElement, inputElement);
-    return true;
-  }
-};
+// функция submit редактирования профиля
 
 function submitEditProfileForm(event) {
   event.preventDefault();
@@ -199,6 +134,8 @@ function submitEditProfileForm(event) {
 }
 
 formEditProfile.addEventListener('submit', submitEditProfileForm);
+
+// функция добавления карточки через popup
 
 function submitCardHandler(event) {
   event.preventDefault();
@@ -223,15 +160,75 @@ function submitCardHandler(event) {
 
 formAddCard.addEventListener('submit', submitCardHandler);
 
-const toggleButtonState = (buttonElement, isFormValid) => {
-  if (isFormValid) {
-    buttonElement.classList.remove('popup__btn-save_disabled');
-    buttonElement.disabled = false;
+const showInputError = (formElement, inputElement, errorMessage) => {
+  const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
+  inputElement.classList.add('popup__input_type_error');
+  errorElement.textContent = errorMessage;
+  errorElement.classList.add('popup__input-error_visible');
+};
+
+const hideInputError = (formElement, inputElement) => {
+  const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
+  inputElement.classList.remove('popup__input_type_error');
+  errorElement.classList.remove('popup__input-error_visible');
+  errorElement.textContent = '';
+};
+
+const isValid = (formElement, inputElement) => {
+  if (!inputElement.validity.valid) {
+      showInputError(formElement, inputElement, inputElement.validationMessage);
+      return false;
   } else {
-    buttonElement.classList.add('popup__btn-save_disabled');
-    buttonElement.disabled = true;
+      hideInputError(formElement, inputElement);
+      return true;
   }
 };
+
+const toggleButtonState = (buttonElement, isFormValid) => {
+  if (isFormValid) {
+      buttonElement.classList.remove('popup__btn-save_disabled');
+      buttonElement.disabled = false;
+  } else {
+      buttonElement.classList.add('popup__btn-save_disabled');
+      buttonElement.disabled = true;
+  }
+};
+
+
+
+/*
+const enableValidation = ({
+  formSelector,
+  submitSelector,
+  submitButtonSelector,
+  inactiveButtonClass,
+  inputErrorClass,
+  errorClass,
+}) => {
+  const forms = Array.from(document.querySelectorAll(formSelector));
+  forms.forEach(form => {
+      setEventListeners(form, {
+          formSelector,
+          submitSelector,
+          submitButtonSelector,
+          inactiveButtonClass,
+          inputErrorClass,
+          errorClass,
+      });
+  });
+};
+
+const config = {
+  formSelector: '.popup__form',
+  inputSelector: '.popup__input',
+  submitButtonSelector: '.popup__btn-save',
+  inactiveButtonClass: 'popup__btn-save_disabled',
+  inputErrorClass: 'popup__input_type_error',
+  errorClass: 'popup__input-error_visible'
+};
+
+enableValidation(config);
+*/
 
 const setEventListeners = (formElement, buttonElement) => {
   const inputList = formElement.querySelectorAll('.popup__input');
@@ -249,6 +246,27 @@ const setEventListeners = (formElement, buttonElement) => {
 setEventListeners(formEditProfile, formEditProfile.querySelector('.popup__btn-save'));
 setEventListeners(formAddCard, formAddCard.querySelector('.popup__btn-save'));
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// ВОЗМОЖНЫЙ EVENT LISTENERS
+/*
 const config = {
   formSelector: '.popup__form',
   inputSelector: '.popup__input',
@@ -258,38 +276,36 @@ const config = {
   errorClass: 'popup__input-error_visible'
 };
 
+const setEventListeners = (config, formElement) => {
+  const inputList = Array.from(formElement.querySelectorAll(config.inputSelector));
+  const buttonElement = formElement.querySelector(config.submitButtonSelector);
+  toggleButtonState(buttonElement, formElement.checkValidity());
+  inputList.forEach((inputElement) => {
+    inputElement.addEventListener('input', () => {
+      isValid(formElement, inputElement);
+      toggleButtonState(buttonElement, formElement.checkValidity());
+    });
+  });
+};
 
 const enableValidation = (config) => {
-  const formList = Array.from(document.querySelectorAll(config.formSelector))
+  const formList = Array.from(document.querySelectorAll(config.formSelector));
   formList.forEach((formElement) => {
-    formElement.addEventListener('submit', function (evt){
+    formElement.addEventListener('submit', (evt) => {
       evt.preventDefault();
-      const buttonElement = formElement.querySelector('.popup__btn-save');
-      toggleButtonState(buttonElement);
-    })
-    setEventListeners(formElement);
+    });
+    setEventListeners(config, formElement);
   });
 };
 
 enableValidation(config);
-
-
-
 */
 
 
 
 
-
-
-
-
-
-
-
-
 // test !!! 
-
+/*
 const showInputError = ({form, input, error}, errorMessage) => {
   input.classList.add('popup__input_type_error');
   error.textContent = errorMessage;
@@ -352,3 +368,4 @@ enableValidation({
   inputErrorClass: 'popup__input_type_error',
   errorClass: 'popup__input-error_visible'
 });
+*/
