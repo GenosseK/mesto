@@ -35,40 +35,12 @@
 @import url(../blocks/popup/__title/popup__title.css);
 @import url(../blocks/popup/__fieldset/popup__fieldset.css);
 @import url(../blocks/popup/__input/popup__input.css);
+@import url(../blocks/popup/__input/_type/_error/popup__input_type_error\ .css);
+@import url(../blocks/popup/__input-error/popup__input-error.css);
+@import url(../blocks/popup/__input-error/_visible/popup__input-error_visible.css);
 @import url(../blocks/popup/__btn-save/popup__btn-save.css);
+@import url(../blocks/popup/__btn-save/_disabled/popup__btn-save_disabled.css);
 @import url(../blocks/popup/__btn-close/popup__btn-close.css);
 @import url(../blocks/popup/__image-container/popup__image-container.css);
 @import url(../blocks/popup/__image/popup__image.css);
 @import url(../blocks/popup/__figcaption/popup__figcaption.css);
-
-.popup__input_type_error {
-    border-bottom: 1px solid #f00;
-}
-
-.popup__input-error {
-    display: none;
-    position: absolute;
-    color: #f00;
-    font-size: 12px;
-    line-height: 15px;
-    font-weight: 400;
-    font-family: 'Inter';
-    font-style: normal;
-}
-
-.popup__input-error_visible {
-    display: block;
-}
-
-
-.popup__btn-save_disabled {
-    background-color: #fff;
-    border: 1px solid #000000;
-    color: #000000;
-    opacity: .2;
-}
-
-.popup__btn-save_disabled:hover {
-    opacity: .2;
-    cursor: default;
-}
