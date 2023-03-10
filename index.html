@@ -40,10 +40,10 @@
                     <h2 class="popup__title">Редактировать профиль</h2>
                     <fieldset class="popup__fieldset">
                         <input type="text" class="popup__input" id="name" name="userName" required placeholder="Имя"
-                            minlength="2" maxlength="40">
+                            minlength="2" maxlength="40" autocomplete="off">
                         <span class="popup__input-error name-error"></span>
                         <input type="text" class="popup__input" id="description" name="userDescription" required
-                            placeholder="Описание" minlength="2" maxlength="40">
+                            placeholder="Описание" minlength="2" maxlength="40" autocomplete="off">
                         <span class="popup__input-error description-error"></span>
                     </fieldset>
                     <button aria-label="Сохранить" type="submit" class="popup__btn-save">Сохранить</button>
@@ -57,10 +57,10 @@
                     <h2 class="popup__title">Новое Место</h2>
                     <fieldset class="popup__fieldset">
                         <input type="text" class="popup__input" id="title-input" name="title" required
-                            placeholder="Название" minlength="2" maxlength="30">
+                            placeholder="Название" minlength="2" maxlength="30" autocomplete="off">
                         <span class="popup__input-error title-input-error"></span>
                         <input type="url" class="popup__input" id="link-input" name="url" required
-                            placeholder="Ссылка на картинку">
+                            placeholder="Ссылка на картинку" autocomplete="off">
                         <span class="popup__input-error link-input-error"></span>
                     </fieldset>
                     <button aria-label="Создать" type="submit" class="popup__btn-save">Создать</button>

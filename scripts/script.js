@@ -68,7 +68,6 @@ function openEditProfileForm() {
   nameInput.value = profileName.textContent;
   descriptionInput.value = profileDescription.textContent;
 
-  // reset validation for the form
   resetValidation(formEditProfile, validationOptions);
 
   openPopup(popupProfileEdit);
@@ -100,8 +99,9 @@ function createCard(card) {
     buttonLike.classList.toggle('element__button-like_active');
   });
 
+
   buttonDelete.addEventListener('click', function () {
-    cardElement.remove();
+    deleteCard(cardElement);
   });
 
   const imageViewer = imageElement;
@@ -114,6 +114,55 @@ function createCard(card) {
 
   return cardElement;
 }
+
+function deleteCard(cardElement) {
+  cardElement.style.opacity = 0;
+  cardElement.style.height = 0;
+  setTimeout(function() {
+    cardElement.remove();
+    const elements = document.querySelectorAll('.element');
+    if (elements.length === 0) {
+      elementsGrid.textContent = ' ';
+    } else {
+      elementsGrid.style.gridAutoRows = getComputedStyle(elements[0]).height;
+      elementsGrid.style.transition = 'grid-auto-rows 0.3s ease-in-out';
+      elementsGrid.addEventListener('transitionend', function() {
+        elementsGrid.style.transition = '';
+        elementsGrid.style.gridAutoRows = 'auto';
+      });
+      elements.forEach(function (element) {
+        element.style.transition = 'transform 0.3s ease-in-out';
+        element.addEventListener('transitionend', function() {
+          element.style.transition = '';
+        });
+        element.style.transform = '';
+      });
+    }
+  }, 300);
+  elementsGrid.style.gridAutoRows = getComputedStyle(cardElement).height;
+  elementsGrid.style.transition = 'grid-auto-rows 0.3s ease-in-out';
+  elementsGrid.addEventListener('transitionend', function() {
+    elementsGrid.style.transition = '';
+    elementsGrid.style.gridAutoRows = 'auto';
+  });
+  const rect = cardElement.getBoundingClientRect();
+  elements.forEach(function (element) {
+    if (element !== cardElement) {
+      const rect2 = element.getBoundingClientRect();
+      if (rect2.top === rect.top) {
+        if (rect2.left > rect.left) {
+          element.style.transform = `translateX(-${rect.width + 20}px)`;
+        } else {
+          element.style.transform = `translateX(${rect.width + 20}px)`;
+        }
+      } else if (rect2.top > rect.top) {
+        element.style.transform = `translateY(-${rect.height + 20}px)`;
+      }
+    }
+  });
+}
+
+
 
 // функция добавления карточек из массива
 
