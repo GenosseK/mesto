@@ -82,8 +82,64 @@ buttonOpenAddCardPopup.addEventListener("click", function () {
   openPopup(popupAddCard);
 });
 
-// функция возврата карточки со слушателями
 
+class Card {
+  constructor(data, templateSelector) {
+    this._name = data.name;
+    this._link = data.link;
+    this._templateSelector = templateSelector;
+  }
+
+  _getTemplate() {
+    const cardTemplate = document.querySelector(this._templateSelector);
+    const cardElement = cardTemplate.content.querySelector('.element').cloneNode(true);
+    return cardElement;
+  }
+
+  _handleLikeButton() {
+    this._likeButton.classList.toggle('element__button-like_active');
+  }
+
+  _handleImageViewer() {
+    this._popupImage.src = this._link;
+    this._popupImage.alt = this._name;
+    this._popupFigcaption.textContent = this._name;
+    openPopup(this._imageViewerPopup);
+  }
+
+  _handleDeleteButton() {
+    this._cardElement.remove();
+  }
+
+  _setEventListeners() {
+    this._likeButton.addEventListener('click', () => this._handleLikeButton());
+    this._deleteButton.addEventListener('click', () => this._handleDeleteButton());
+    this._imageViewer.addEventListener('click', () => this._handleImageViewer());
+  }
+
+  createCard() {
+    this._cardElement = this._getTemplate();
+    this._imageElement = this._cardElement.querySelector('.element__image');
+    this._captionElement = this._cardElement.querySelector('.element__caption');
+    this._likeButton = this._cardElement.querySelector('.element__button-like');
+    this._deleteButton = this._cardElement.querySelector('.element__button-delete');
+    this._imageViewer = this._imageElement;
+    this._popupImage = imageViewerPopup.querySelector('.popup__image');
+    this._popupFigcaption = imageViewerPopup.querySelector('.popup__figcaption');
+    this._imageViewerPopup = imageViewerPopup;
+
+    this._imageElement.src = this._link;
+    this._imageElement.alt = this._name;
+    this._captionElement.textContent = this._name;
+
+    this._setEventListeners();
+
+    return this._cardElement;
+  }
+}
+
+// функция возврата карточки со слушателями
+/*
 function createCard(card) {
   const cardElement = cardsTemplate.querySelector('.element').cloneNode(true);
   const imageElement = cardElement.querySelector('.element__image');
@@ -113,11 +169,11 @@ function createCard(card) {
 
   return cardElement;
 }
-
+*/
 // функция добавления карточек из массива
 
 initialCards.forEach(card => {
-  const cardElement = createCard(card);
+  const cardElement = new Card(card, '.cards-template').createCard();
   elementsGrid.prepend(cardElement);
 });
 
@@ -142,7 +198,7 @@ function submitCardForm(event) {
     name: title,
     link: url
   };
-  const cardElement = createCard(card);
+  const cardElement = new Card(card, '.cards-template').createCard();
   elementsGrid.prepend(cardElement);
   closePopup(popupAddCard);
   formAddCard.reset();
