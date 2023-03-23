@@ -119,11 +119,16 @@ function createCard(card) {
   return cardElement;
 }
 */
+
+function createCard(item) {
+  const cardElement = new Card(item, '.cards-template', openPopup).createCard();
+  return cardElement
+}
+
 // функция добавления карточек из массива
 
 initialCards.forEach(card => {
-  const cardElement = new Card(card, '.cards-template', openPopup).createCard();
-  elementsGrid.prepend(cardElement);
+  elementsGrid.prepend(createCard(card));
 });
 
 // функция submit редактирования профиля
@@ -147,13 +152,11 @@ function submitCardForm(event) {
     name: title,
     link: url
   };
-  const cardElement = new Card(card, '.cards-template', openPopup).createCard();
-  elementsGrid.prepend(cardElement);
+  elementsGrid.prepend(createCard(card));
   closePopup(popupAddCard);
   formAddCard.reset();
 
-  const submitButtonElement = formAddCard.querySelector(validationOptions.submitButtonSelector);
-  addCardFormValidator.toggleButtonState(formAddCard.checkValidity(), submitButtonElement);
+  addCardFormValidator.toggleButtonState(formAddCard.checkValidity());
 }
 
 formAddCard.addEventListener('submit', submitCardForm);
