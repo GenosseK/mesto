@@ -120,10 +120,19 @@ function createCard(card) {
 }
 */
 
-function createCard(item) {
-  const cardElement = new Card(item, '.cards-template', openPopup).createCard();
-  return cardElement
+function handleCardClick(name, link) {
+  popupImage.src = link;
+  popupImage.alt = name;
+  popupFigcaption.textContent = name;
+  openPopup(imageViewerPopup);
 }
+
+
+function createCard(item) {
+  const cardElement = new Card(item, '.cards-template', openPopup, handleCardClick).createCard();
+  return cardElement;
+}
+
 
 // функция добавления карточек из массива
 
