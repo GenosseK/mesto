@@ -32,7 +32,7 @@ const userInfo = new UserInfo({
   userInfoElement: '.profile__job'
 })
 
-
+// Создание карточки
 const createCard = (item) => {
   const cardElement = new Card(item, '.cards-template', () => {
     popupWithImage.open(item)
@@ -48,6 +48,7 @@ const cardContainer = new Section({
 
 cardContainer.renderItems(initialCards);
 
+// Popup редактирования профиля
 const formProfile = new PopupWithForm('.popup_profile-edit', {
   handleFormSubmit: (element) => {
     userInfo.setUserInfo(element)
@@ -61,6 +62,8 @@ buttonEdit.addEventListener('click', () => {
   editProfileFormValidator.resetValidation();
 })
 
+
+// Popup добавления карточки
 const addCardPopup = new PopupWithForm('.popup_add-card', {
   handleFormSubmit: ({ name, link }) => {
     cardContainer.addItem(createCard({
