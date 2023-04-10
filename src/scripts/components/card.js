@@ -3,10 +3,6 @@ export default class Card {
         this._name = data.name;
         this._link = data.link;
         this._templateSelector = templateSelector;
-<<<<<<< HEAD:src/scripts/components/card.js
-=======
-        //this._openPopup = openPopup;
->>>>>>> 1d787ab6c8309e1f8e888a658a548bfd9bcd69b5:scripts/card.js
         this._buttonLike = null;
         this._popupImage = null;
         this._popupFigcaption = null;
