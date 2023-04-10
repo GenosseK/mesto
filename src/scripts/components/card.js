@@ -1,9 +1,8 @@
 export default class Card {
-    constructor(data, templateSelector, openPopup, handleCardClick) {
+    constructor(data, templateSelector, handleCardClick) {
         this._name = data.name;
         this._link = data.link;
         this._templateSelector = templateSelector;
-        this._openPopup = openPopup;
         this._buttonLike = null;
         this._popupImage = null;
         this._popupFigcaption = null;
@@ -42,7 +41,7 @@ export default class Card {
         this._imageViewerPopup = document.querySelector('.popup_image-viewer');
     }
 
-
+    
     _handleLikeButton() {
         this._buttonLike.classList.toggle('element__button-like_active');
     }
