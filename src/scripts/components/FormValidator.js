@@ -55,13 +55,13 @@ export default class FormValidator {
         this._inputList.forEach((inputElement) => {
             this._hideInputError(inputElement);
         });
-
+        /*
         const errorList = Array.from(this._formElement.querySelectorAll(`.${this._options.errorClass}`));
         errorList.forEach((errorElement) => {
             errorElement.textContent = '';
             errorElement.classList.remove(this._options.errorClass);
         });
-
+        */
         this.toggleButtonState(this._formElement.checkValidity());
     }
 }

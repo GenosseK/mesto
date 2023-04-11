@@ -35,10 +35,6 @@ export default class Card {
         this._imageElement.addEventListener('click', () => {
             this._handleCardClick(this._name, this._link);
         });
-
-        this._popupImage = document.querySelector('.popup__image');
-        this._popupFigcaption = document.querySelector('.popup__figcaption');
-        this._imageViewerPopup = document.querySelector('.popup_image-viewer');
     }
 
     
@@ -59,7 +55,7 @@ export default class Card {
         this._imageElement.alt = this._name;
         captionElement.textContent = this._name;
 
-        this._setEventListeners(this._element);
+        _setEventListeners(this._element);
 
         return this._element;
     }

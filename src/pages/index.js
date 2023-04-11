@@ -1,17 +1,13 @@
 import '../pages/index.css'
 import Card from '../scripts/components/Card.js';
-import { initialCards, validationOptions } from '../scripts/utils/utils.js';
+import { initialCards } from '../scripts/utils/utils.js';
+import { validationOptions, buttonEdit, formEditProfile, buttonOpenAddCardPopup, formAddCard } from '../scripts/utils/constants.js'
 import FormValidator from '../scripts/components/FormValidator.js';
 import Popup from '../scripts/components/Popup.js';
 import PopupWithForm from '../scripts/components/PopupWithForm.js';
 import PopupWithImage from '../scripts/components/PopupWithImage.js';
 import Section from '../scripts/components/Section.js';
 import UserInfo from '../scripts/components/UserInfo.js';
-
-const buttonEdit = document.querySelector('.profile__edit-button');
-const formEditProfile = document.forms.profileEdit;
-const buttonOpenAddCardPopup = document.querySelector('.profile__add-button');
-const formAddCard = document.forms.addCard;
 
 const popupWithImage = new PopupWithImage('#imageViewerPopup')
 
