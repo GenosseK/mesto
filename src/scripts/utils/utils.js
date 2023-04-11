@@ -26,3 +26,14 @@ export const initialCards = [
         link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
     }
 ];
+
+// Валидация
+export const validationOptions = {
+    formSelector: '.popup__form',
+    inputSelector: '.popup__input',
+    submitButtonSelector: '.popup__btn-save',
+    inactiveButtonClass: 'popup__btn-save_disabled',
+    inputErrorClass: 'popup__input_type_error',
+    errorCLassSelector: 'popup__input-error',
+    errorClass: 'popup__input-error_visible'
+  };
