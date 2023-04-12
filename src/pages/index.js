@@ -27,8 +27,8 @@ const createCard = (item) => {
 const cardContainer = new Section({
   renderer: (card) => {
     cardContainer.addItem(createCard(card));
-  }, 
-},'.elements__grid')
+  },
+}, '.elements__grid')
 
 cardContainer.renderItems(initialCards);
 
@@ -73,3 +73,66 @@ addCardFormValidator.enableValidation();
 popupWithImage.setEventListeners()
 formProfile.setEventListeners()
 addCardPopup.setEventListeners()
+
+
+// экспериментирую с scrollButton, удалю или закомментирую по требованию
+let prevScrollpos = window.pageYOffset;
+let scrollButton = document.getElementById('scroll-to-top-button');
+let showTimer = null;
+let hideTimer = null;
+
+window.addEventListener('scroll', function () {
+  let currentScrollpos = window.pageYOffset;
+  if (prevScrollpos > currentScrollpos && currentScrollpos > 0) {
+    cancelHide();
+    scheduleShow();
+  } else {
+    cancelShow();
+    scheduleHide();
+  }
+  prevScrollpos = currentScrollpos;
+});
+
+function scheduleShow() {
+  if (!showTimer) {
+    showTimer = window.requestAnimationFrame(showButton);
+  }
+}
+
+function scheduleHide() {
+  if (!hideTimer) {
+    hideTimer = window.requestAnimationFrame(hideButton);
+  }
+}
+
+function cancelShow() {
+  if (showTimer) {
+    window.cancelAnimationFrame(showTimer);
+    showTimer = null;
+  }
+}
+
+function cancelHide() {
+  if (hideTimer) {
+    window.cancelAnimationFrame(hideTimer);
+    hideTimer = null;
+  }
+}
+
+function showButton() {
+  scrollButton.classList.remove('slide-out');
+  scrollButton.style.display = 'block';
+  showTimer = null;
+}
+
+function hideButton() {
+  scrollButton.classList.add('slide-out');
+  hideTimer = null;
+}
+
+document.getElementById('scroll-to-top-button').addEventListener('click', function () {
+  window.scrollTo({
+    top: 0,
+    behavior: 'smooth'
+  });
+});
