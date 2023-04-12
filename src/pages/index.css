@@ -63,6 +63,10 @@
     animation-duration: 0.5s;
     animation-name: slideIn;
     transition: opacity 0.5s, transform 0.5s;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 3L2 12h5v8h10v-8h5L12 3z'/%3E%3Cpath d='M0 0h24v24H0z' fill='none'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-size: 75%;
+    background-position: center;
 }
 
 #scroll-to-top-button.slide-out {
