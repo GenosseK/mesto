@@ -1,4 +1,5 @@
 import '../pages/index.css'
+import API from '../scripts/components/API.js'
 import Card from '../scripts/components/Card.js';
 import { initialCards } from '../scripts/utils/utils.js';
 import { validationOptions, buttonEdit, formEditProfile, buttonOpenAddCardPopup, formAddCard } from '../scripts/utils/constants.js'
@@ -8,6 +9,14 @@ import PopupWithForm from '../scripts/components/PopupWithForm.js';
 import PopupWithImage from '../scripts/components/PopupWithImage.js';
 import Section from '../scripts/components/Section.js';
 import UserInfo from '../scripts/components/UserInfo';
+
+const api = new API({
+  baseURL: 'https://mesto.nomoreparties.co/v1/cohort-64',
+  headers: {
+    authorization: '2bc76956-8c18-424e-a75e-aff99086882b',
+    'Content-Type': 'application/json'
+  }
+})
 
 const popupWithImage = new PopupWithImage('#imageViewerPopup')
 
@@ -30,14 +39,52 @@ const cardContainer = new Section({
   },
 }, '.elements__grid')
 
-cardContainer.renderItems(initialCards);
+api.getInitialCards()
+  .then((cards) => {
+    cardContainer.renderItems(cards);
+  })
+  .catch((error) => {
+    console.log(error);
+  })
+
+//cardContainer.renderItems(initialCards);
 
 // Popup редактирования профиля
+
+const formProfile = new PopupWithForm('.popup_profile-edit', {
+  handleFormSubmit: ({ userName, userDescription }) => {
+    api.setUserInfo({ userName, userDescription })
+      .then((data) => {
+        userInfo.setUserInfo(data);
+        formProfile.close();
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+});
+
+
+/*const formProfile = new PopupWithForm('.popup_profile-edit', {
+  handleFormSubmit: ({ userName, userDescription }) => {
+    api.setUserInfo({ userName, userDescription })
+      .then((res) => {
+        // update the user information displayed on the page
+        userInfo.setUserInfo(res);
+        formProfile.close();
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+});*/
+
+/*
 const formProfile = new PopupWithForm('.popup_profile-edit', {
   handleFormSubmit: ({ userName, userDescription }) => {
     userInfo.setUserInfo({ userName, userDescription })
   }
-})
+})*/
 
 buttonEdit.addEventListener('click', () => {
   formProfile.open()
@@ -48,6 +95,22 @@ buttonEdit.addEventListener('click', () => {
 
 
 // Popup добавления карточки
+
+const addCardPopup = new PopupWithForm('.popup_add-card', {
+  handleFormSubmit: ({ title, url }) => {
+    api.addCard({ title, url })
+      .then((card) => {
+        cardContainer.addItem(createCard(card));
+        addCardPopup.close();
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+});
+
+
+/*
 const addCardPopup = new PopupWithForm('.popup_add-card', {
   handleFormSubmit: ({ title, url }) => {
     cardContainer.addItem(createCard({
@@ -57,6 +120,7 @@ const addCardPopup = new PopupWithForm('.popup_add-card', {
     }))
   }
 });
+*/
 
 buttonOpenAddCardPopup.addEventListener('click', () => {
   addCardPopup.open()
