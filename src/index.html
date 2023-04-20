@@ -17,6 +17,7 @@
             <section class="profile">
                 <div class="profile__info">
                     <img src="<%=require('./images/image.jpg')%>" alt="Аватар пользователя" class="profile__avatar">
+                    <button class="profile__edit-avatar-button"></button>
                     <div class="profile__description">
                         <div class="profile__user">
                             <h1 class="profile__name">Жак-Ив Кусто</h1>
@@ -78,12 +79,24 @@
                 <figcaption class="popup__figcaption"></figcaption>
             </figure>
         </div>
-        <div class="popup popup_delete-card popup_opened">
+        <div class="popup popup_delete-card">
             <div class="popup__container">
                 <button aria-label="Закрыть" type="button" class="popup__btn-close"></button>
-                <h2 class="popup__title">Вы уверены?</h2>
+                <h2 class="popup__title popup__title-confirm">Вы уверены?</h2>
                 <fieldset class="popup__fieldset">
-                    <button aria-label="Да" type="submit" class="popup__btn-save">Да</button>
+                    <button aria-label="Да" type="submit" class="popup__btn-save popup__btn-confirm">Да</button>
+                </fieldset>
+            </div>
+        </div>
+        <div class="popup popup_update-avatar">
+            <div class="popup__container">
+                <button aria-label="Закрыть" type="button" class="popup__btn-close"></button>
+                <h2 class="popup__title popup__title-avatar">Обновить аватар</h2>
+                <fieldset class="popup__fieldset">
+                    <input type="url" class="popup__input" id="link-input" name="url" required
+                        placeholder="Ссылка на картинку" autocomplete="off">
+                    <span class="popup__input-error link-input-error"></span>
+                    <button aria-label="Да" type="submit" class="popup__btn-save">Сохранить</button>
                 </fieldset>
             </div>
         </div>
@@ -94,7 +107,10 @@
             <img src="#" alt="#" class="element__image">
             <div class="element__info">
                 <h2 class="element__caption"></h2>
+                <div class="element__like-container">
                 <button aria-label="Нравится" type="button" class="element__button-like"></button>
+                <span class="element__like-counter">1</span>
+            </div>
             </div>
         </li>
     </template>
