@@ -18,6 +18,15 @@ const api = new API({
   }
 })
 
+api.getUserInfo()
+  .then(data => {
+    userInfo.setUserInfo({
+      userName: data.name,
+      userDescription: data.about
+    });
+  })
+  .catch(error => console.log(error));
+
 const popupWithImage = new PopupWithImage('#imageViewerPopup')
 
 const userInfo = new UserInfo({
@@ -50,7 +59,7 @@ api.getInitialCards()
 //cardContainer.renderItems(initialCards);
 
 // Popup редактирования профиля
-
+/*
 const formProfile = new PopupWithForm('.popup_profile-edit', {
   handleFormSubmit: ({ userName, userDescription }) => {
     api.setUserInfo({ userName, userDescription })
@@ -63,7 +72,7 @@ const formProfile = new PopupWithForm('.popup_profile-edit', {
       });
   }
 });
-
+*/
 
 /*const formProfile = new PopupWithForm('.popup_profile-edit', {
   handleFormSubmit: ({ userName, userDescription }) => {
@@ -78,6 +87,20 @@ const formProfile = new PopupWithForm('.popup_profile-edit', {
       });
   }
 });*/
+
+const formProfile = new PopupWithForm('.popup_profile-edit', {
+  handleFormSubmit: ({ userName, userDescription }) => {
+    api.editUserInfo({ name: userName, about: userDescription })
+      .then(data => {
+        userInfo.setUserInfo({
+          userName: data.name,
+          userDescription: data.about
+        });
+        formProfile.close();
+      })
+      .catch(error => console.log(error))
+  }
+});
 
 /*
 const formProfile = new PopupWithForm('.popup_profile-edit', {
@@ -95,7 +118,7 @@ buttonEdit.addEventListener('click', () => {
 
 
 // Popup добавления карточки
-
+/*
 const addCardPopup = new PopupWithForm('.popup_add-card', {
   handleFormSubmit: ({ title, url }) => {
     api.addCard({ title, url })
@@ -108,7 +131,7 @@ const addCardPopup = new PopupWithForm('.popup_add-card', {
       });
   }
 });
-
+*/
 
 /*
 const addCardPopup = new PopupWithForm('.popup_add-card', {
@@ -121,6 +144,17 @@ const addCardPopup = new PopupWithForm('.popup_add-card', {
   }
 });
 */
+
+const addCardPopup = new PopupWithForm('.popup_add-card', {
+  handleFormSubmit: ({ title, url }) => {
+    api.addCard({ name: title, link: url })
+      .then((card) => {
+        cardContainer.addItem(createCard(card));
+        addCardPopup.close();
+      })
+      .catch(error => console.log(error))
+  }
+});
 
 buttonOpenAddCardPopup.addEventListener('click', () => {
   addCardPopup.open()

@@ -7,31 +7,29 @@ export default class API {
     getUserInfo() {
         return fetch(`${this._baseURL}/users/me`, {
             method: 'GET',
-            headers: this.headers,
-        })
-            .then((res) => {
-                if (res.ok) {
-                    return res.json();
-                }
-                return Promise.reject(`Error: ${res.status}`)
-            });
+            headers: this._headers
+        }).then(response => {
+            if (response.ok) {
+                return response.json();
+            }
+            return Promise.reject(`Error: ${response.status}`);
+        });
     }
 
-    setUserInfo(data) {
+    editUserInfo({ name, about }) {
         return fetch(`${this._baseURL}/users/me`, {
             method: 'PATCH',
             headers: this._headers,
             body: JSON.stringify({
-                name: data.userName,
-                description: data.userDescription,
+                name: name,
+                about: about
             })
-        })
-            .then((res) => {
-                if (res.ok) {
-                    return res.json()
-                }
-                return Promise.reject(`Error: ${res.status}`)
-            })
+        }).then(response => {
+            if (response.ok) {
+                return response.json();
+            }
+            return Promise.reject(`Error: ${response.status}`);
+        });
     }
 
     getInitialCards() {
@@ -47,13 +45,13 @@ export default class API {
             })
     }
 
-    addCard(data) {
+    addCard({ name, link }) {
         return fetch(`${this._baseURL}/cards`, {
             method: 'POST',
             headers: this._headers,
             body: JSON.stringify({
-                name: data.title,
-                link: data.url,
+                name: name,
+                link: link
             })
         })
             .then((res) => {
