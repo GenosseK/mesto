@@ -20,10 +20,10 @@
                     <button class="profile__edit-avatar-button"></button>
                     <div class="profile__description">
                         <div class="profile__user">
-                            <h1 class="profile__name">Жак-Ив Кусто</h1>
+                            <h1 class="profile__name"></h1>
                             <button aria-label="Редактировать" type="button" class="profile__edit-button"></button>
                         </div>
-                        <p class="profile__job">Исследователь океана</p>
+                        <p class="profile__job"></p>
                     </div>
                 </div>
                 <button aria-label="Добавить карточку" type="button" class="profile__add-button"></button>
@@ -83,9 +83,9 @@
             <div class="popup__container">
                 <button aria-label="Закрыть" type="button" class="popup__btn-close"></button>
                 <h2 class="popup__title popup__title-confirm">Вы уверены?</h2>
-                <fieldset class="popup__fieldset">
+                <form class="popup__form" name="delete-card-form" novalidate>
                     <button aria-label="Да" type="submit" class="popup__btn-save popup__btn-confirm">Да</button>
-                </fieldset>
+                </form>
             </div>
         </div>
         <div class="popup popup_update-avatar">
@@ -109,7 +109,7 @@
                 <h2 class="element__caption"></h2>
                 <div class="element__like-container">
                 <button aria-label="Нравится" type="button" class="element__button-like"></button>
-                <span class="element__like-counter">1</span>
+                <span class="element__like-counter"></span>
             </div>
             </div>
         </li>

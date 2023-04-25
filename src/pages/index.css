@@ -48,6 +48,10 @@
 @import url(../blocks/popup/__image/popup__image.css);
 @import url(../blocks/popup/__figcaption/popup__figcaption.css);
 
+.element__button-delete_hidden {
+    display: none;
+}
+
 .profile__edit-avatar-button {
     background-image: url(/src/images/Pencil.svg);
     background-repeat: no-repeat;

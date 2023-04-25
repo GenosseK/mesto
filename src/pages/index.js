@@ -9,6 +9,8 @@ import PopupWithForm from '../scripts/components/PopupWithForm.js';
 import PopupWithImage from '../scripts/components/PopupWithImage.js';
 import Section from '../scripts/components/Section.js';
 import UserInfo from '../scripts/components/UserInfo';
+import PopupWithConfirmation from '../scripts/components/PopupWithConfirmation.js';
+const popupWithImage = new PopupWithImage('#imageViewerPopup')
 
 const api = new API({
   baseURL: 'https://mesto.nomoreparties.co/v1/cohort-64',
@@ -18,35 +20,17 @@ const api = new API({
   }
 })
 
+
+/*
 api.getUserInfo()
   .then(data => {
+    userId = data._id;
     userInfo.setUserInfo({
       userName: data.name,
       userDescription: data.about
     });
   })
   .catch(error => console.log(error));
-
-const popupWithImage = new PopupWithImage('#imageViewerPopup')
-
-const userInfo = new UserInfo({
-  userNameElement: '.profile__name',
-  userInfoElement: '.profile__job'
-})
-
-// Создание карточки
-const createCard = (item) => {
-  const cardElement = new Card(item, '.cards-template', () => {
-    popupWithImage.open(item)
-  });
-  return cardElement.createCard();
-};
-
-const cardContainer = new Section({
-  renderer: (card) => {
-    cardContainer.addItem(createCard(card));
-  },
-}, '.elements__grid')
 
 api.getInitialCards()
   .then((cards) => {
@@ -55,6 +39,114 @@ api.getInitialCards()
   .catch((error) => {
     console.log(error);
   })
+*/
+
+
+let userId;
+
+Promise.all([api.getUserInfo(), api.getInitialCards()])
+  .then(([data, cards]) => {
+    userId = data._id;
+    userInfo.setUserInfo({
+      userName: data.name,
+      userDescription: data.about
+    });
+    cardContainer.renderItems(cards);
+  })
+  .catch((err) => console.log(err))
+
+
+const userInfo = new UserInfo({
+  userNameElement: '.profile__name',
+  userInfoElement: '.profile__job'
+})
+/*
+const confirmPopup = new PopupWithConfirmation('.popup_delete-card', {
+  handleFormSubmit: (id, cardElement) => {
+   
+      api.deleteCard(id)
+      .then(()=> {
+        cardElement.deleteCard();
+        confirmPopup.close()
+      })
+      .catch((err) => console.log((err)))
+    
+  }
+});*/
+
+const confirmPopup = new PopupWithConfirmation('.popup_delete-card');
+
+
+const cardContainer = new Section({
+  renderer: (card) => {
+    cardContainer.addItem(createCard(card));
+  },
+}, '.elements__grid')
+
+// Создание карточки
+const createCard = (data) => {
+  const cardElement = new Card(data,
+    '.cards-template',
+    () => popupWithImage.open(data),
+    (id) => {
+      confirmPopup.setConfirm(() => {
+        confirmPopup.renderLoading(true)
+        api.deleteCard(id)
+          .then(() => {
+            cardElement.deleteCard();
+            confirmPopup.close();
+          })
+          .catch((err) => console.log((err)))
+          .finally(() => confirmPopup.renderLoading(false))
+      })
+      confirmPopup.open()
+    },
+    (id) => {
+      if (!cardElement.isLiked()) {
+        api.addLike(id)
+          .then((data) => {
+            cardElement.updateData(data);
+            cardElement.updateLikesStatus();
+          })
+          .catch((err) => {
+            console.log(err);
+          })
+      } else {
+        api.deleteLike(id)
+          .then((data) => {
+            cardElement.updateData(data);
+            cardElement.updateLikesStatus();
+          })
+         .catch((err) => {
+          console.log(err);
+         }) 
+      }
+    },
+    userId
+  );
+  return cardElement.createCard();
+};
+
+const addCardPopup = new PopupWithForm('.popup_add-card', {
+  handleFormSubmit: ({ title, url }) => {
+    api.addCard({ name: title, link: url })
+      .then((card) => {
+        console.log(card);
+        cardContainer.addItem(createCard(card));
+        addCardPopup.close();
+      })
+      .catch(error => console.log(error))
+  }
+});
+
+buttonOpenAddCardPopup.addEventListener('click', () => {
+  addCardPopup.open()
+
+  addCardFormValidator.resetValidation();
+})
+
+
+
 
 //cardContainer.renderItems(initialCards);
 
@@ -145,22 +237,9 @@ const addCardPopup = new PopupWithForm('.popup_add-card', {
 });
 */
 
-const addCardPopup = new PopupWithForm('.popup_add-card', {
-  handleFormSubmit: ({ title, url }) => {
-    api.addCard({ name: title, link: url })
-      .then((card) => {
-        cardContainer.addItem(createCard(card));
-        addCardPopup.close();
-      })
-      .catch(error => console.log(error))
-  }
-});
 
-buttonOpenAddCardPopup.addEventListener('click', () => {
-  addCardPopup.open()
 
-  addCardFormValidator.resetValidation();
-})
+
 
 const editProfileFormValidator = new FormValidator(formEditProfile, validationOptions);
 editProfileFormValidator.enableValidation();
@@ -171,6 +250,8 @@ addCardFormValidator.enableValidation();
 popupWithImage.setEventListeners()
 formProfile.setEventListeners()
 addCardPopup.setEventListeners()
+confirmPopup.setEventListeners()
+
 
 
 // экспериментирую с scrollButton, удалю или закомментирую по требованию
