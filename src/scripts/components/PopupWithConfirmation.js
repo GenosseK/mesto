@@ -27,35 +27,3 @@ export default class PopupWithConfirmation extends Popup {
     })
   }
 }
-
-/*
-export default class PopupWithConfirmation extends Popup {
-    constructor(popupElement, {handleFormSubmit}) {
-        super(popupElement);
-        this._buttonSave = this._popupElement.querySelector('.popup__btn-save');
-        this._handleFormSubmit = handleFormSubmit;
-    }
-
-    open(cardElement, idCard) {
-        super.open();
-        this.id = idCard;
-        this.card = cardElement;
-    }
-
-    setEventListeners() {
-        super.setEventListeners();
-        this._buttonSave.addEventListener('click', (event) => {
-            event.preventDefault();
-            this._handleFormSubmit(this.id, this.card);
-        })
-    }
-
-}*/
-
-/*
-  open(cardElement, idCard) {
-    super.open();
-    this._id = idCard;
-    this._card = cardElement;
-  }
-*/

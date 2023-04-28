@@ -2,6 +2,8 @@ export const buttonEdit = document.querySelector('.profile__edit-button');
 export const formEditProfile = document.forms.profileEdit;
 export const buttonOpenAddCardPopup = document.querySelector('.profile__add-button');
 export const formAddCard = document.forms.addCard;
+export const formChangeAvatar = document.forms.changeAvatar;
+export const avatarButton = document.querySelector('.profile__avatar_edit-button');
 
 // Валидация
 export const validationOptions = {

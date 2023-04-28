@@ -23,11 +23,7 @@ export default class Card {
         return templateElement;
     }
 
-
-
     _setEventListeners() {
-        this._imageElement = this._element.querySelector('.element__image');
-
 
         this._buttonLike.addEventListener('click', () => this._handleLikeClick(this._id));
 
@@ -37,11 +33,6 @@ export default class Card {
             this._handleCardClick(this._name, this._link);
         });
     }
-
-    /*
-    _handleLikeButton() {
-        this._buttonLike.classList.toggle('element__button-like_active');
-    }*/
 
     _handleDeleteButton(cardElement) {
         cardElement.remove();

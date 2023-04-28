@@ -1,8 +1,7 @@
 import '../pages/index.css'
 import API from '../scripts/components/API.js'
 import Card from '../scripts/components/Card.js';
-import { initialCards } from '../scripts/utils/utils.js';
-import { validationOptions, buttonEdit, formEditProfile, buttonOpenAddCardPopup, formAddCard } from '../scripts/utils/constants.js'
+import { validationOptions, buttonEdit, formEditProfile, buttonOpenAddCardPopup, formAddCard, formChangeAvatar, avatarButton } from '../scripts/utils/constants.js'
 import FormValidator from '../scripts/components/FormValidator.js';
 import Popup from '../scripts/components/Popup.js';
 import PopupWithForm from '../scripts/components/PopupWithForm.js';
@@ -20,28 +19,6 @@ const api = new API({
   }
 })
 
-
-/*
-api.getUserInfo()
-  .then(data => {
-    userId = data._id;
-    userInfo.setUserInfo({
-      userName: data.name,
-      userDescription: data.about
-    });
-  })
-  .catch(error => console.log(error));
-
-api.getInitialCards()
-  .then((cards) => {
-    cardContainer.renderItems(cards);
-  })
-  .catch((error) => {
-    console.log(error);
-  })
-*/
-
-
 let userId;
 
 Promise.all([api.getUserInfo(), api.getInitialCards()])
@@ -49,33 +26,46 @@ Promise.all([api.getUserInfo(), api.getInitialCards()])
     userId = data._id;
     userInfo.setUserInfo({
       userName: data.name,
-      userDescription: data.about
-    });
-    cardContainer.renderItems(cards);
+      userDescription: data.about,
+      userAvatar: data.avatar
+    }),
+      cardContainer.renderItems(cards);
   })
   .catch((err) => console.log(err))
 
-
 const userInfo = new UserInfo({
   userNameElement: '.profile__name',
-  userInfoElement: '.profile__job'
+  userInfoElement: '.profile__job',
+  userAvatar: '.profile__avatar'
 })
-/*
-const confirmPopup = new PopupWithConfirmation('.popup_delete-card', {
-  handleFormSubmit: (id, cardElement) => {
-   
-      api.deleteCard(id)
-      .then(()=> {
-        cardElement.deleteCard();
-        confirmPopup.close()
+
+// Popup изменения аватара
+
+const avatarPopup = new PopupWithForm('.popup_update-avatar', {
+  handleFormSubmit: (data) => {
+    avatarPopup.renderLoading(true);
+    api.changeAvatar(data)
+      .then((res) => {
+        userInfo.setUserInfo({
+          userName: res.name,
+          userDescription: res.about,
+          userAvatar: res.avatar
+        });
+        avatarPopup.close();
       })
-      .catch((err) => console.log((err)))
-    
-  }
-});*/
+      .finally(() => {
+        avatarPopup.renderLoading(false);
+      });
+  },
+});
+
+avatarButton.addEventListener('click', () => {
+  avatarPopup.open();
+
+  changeAvatarFormValidator.resetValidation()
+});
 
 const confirmPopup = new PopupWithConfirmation('.popup_delete-card');
-
 
 const cardContainer = new Section({
   renderer: (card) => {
@@ -117,9 +107,9 @@ const createCard = (data) => {
             cardElement.updateData(data);
             cardElement.updateLikesStatus();
           })
-         .catch((err) => {
-          console.log(err);
-         }) 
+          .catch((err) => {
+            console.log(err);
+          })
       }
     },
     userId
@@ -127,15 +117,18 @@ const createCard = (data) => {
   return cardElement.createCard();
 };
 
+// Popup добавления карточки
+
 const addCardPopup = new PopupWithForm('.popup_add-card', {
   handleFormSubmit: ({ title, url }) => {
+    addCardPopup.renderLoading(true)
     api.addCard({ name: title, link: url })
       .then((card) => {
-        console.log(card);
         cardContainer.addItem(createCard(card));
         addCardPopup.close();
       })
       .catch(error => console.log(error))
+      .finally(() => addCardPopup.renderLoading(false))
   }
 });
 
@@ -145,61 +138,24 @@ buttonOpenAddCardPopup.addEventListener('click', () => {
   addCardFormValidator.resetValidation();
 })
 
-
-
-
-//cardContainer.renderItems(initialCards);
-
 // Popup редактирования профиля
-/*
-const formProfile = new PopupWithForm('.popup_profile-edit', {
-  handleFormSubmit: ({ userName, userDescription }) => {
-    api.setUserInfo({ userName, userDescription })
-      .then((data) => {
-        userInfo.setUserInfo(data);
-        formProfile.close();
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }
-});
-*/
-
-/*const formProfile = new PopupWithForm('.popup_profile-edit', {
-  handleFormSubmit: ({ userName, userDescription }) => {
-    api.setUserInfo({ userName, userDescription })
-      .then((res) => {
-        // update the user information displayed on the page
-        userInfo.setUserInfo(res);
-        formProfile.close();
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }
-});*/
 
 const formProfile = new PopupWithForm('.popup_profile-edit', {
   handleFormSubmit: ({ userName, userDescription }) => {
+    formProfile.renderLoading(true)
     api.editUserInfo({ name: userName, about: userDescription })
       .then(data => {
         userInfo.setUserInfo({
           userName: data.name,
-          userDescription: data.about
+          userDescription: data.about,
+          userAvatar: data.avatar
         });
         formProfile.close();
       })
       .catch(error => console.log(error))
+      .finally(() => formProfile.renderLoading(false))
   }
 });
-
-/*
-const formProfile = new PopupWithForm('.popup_profile-edit', {
-  handleFormSubmit: ({ userName, userDescription }) => {
-    userInfo.setUserInfo({ userName, userDescription })
-  }
-})*/
 
 buttonEdit.addEventListener('click', () => {
   formProfile.open()
@@ -209,49 +165,20 @@ buttonEdit.addEventListener('click', () => {
 })
 
 
-// Popup добавления карточки
-/*
-const addCardPopup = new PopupWithForm('.popup_add-card', {
-  handleFormSubmit: ({ title, url }) => {
-    api.addCard({ title, url })
-      .then((card) => {
-        cardContainer.addItem(createCard(card));
-        addCardPopup.close();
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }
-});
-*/
-
-/*
-const addCardPopup = new PopupWithForm('.popup_add-card', {
-  handleFormSubmit: ({ title, url }) => {
-    cardContainer.addItem(createCard({
-      name: title,
-      link: url,
-      alt: title
-    }))
-  }
-});
-*/
-
-
-
-
-
 const editProfileFormValidator = new FormValidator(formEditProfile, validationOptions);
 editProfileFormValidator.enableValidation();
 
 const addCardFormValidator = new FormValidator(formAddCard, validationOptions);
 addCardFormValidator.enableValidation();
 
+const changeAvatarFormValidator = new FormValidator(formChangeAvatar, validationOptions);
+changeAvatarFormValidator.enableValidation();
+
 popupWithImage.setEventListeners()
 formProfile.setEventListeners()
 addCardPopup.setEventListeners()
 confirmPopup.setEventListeners()
-
+avatarPopup.setEventListeners()
 
 
 // экспериментирую с scrollButton, удалю или закомментирую по требованию

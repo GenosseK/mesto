@@ -4,16 +4,19 @@ export default class API {
         this._headers = settings.headers;
     }
 
+    _handleResponseStatus(response) {
+        if (response.ok) {
+            return response.json();
+        } else {
+            return Promise.reject(`Error: ${response.status}`);
+        }
+    }
+
     getUserInfo() {
         return fetch(`${this._baseURL}/users/me`, {
             method: 'GET',
             headers: this._headers
-        }).then(response => {
-            if (response.ok) {
-                return response.json();
-            }
-            return Promise.reject(`Error: ${response.status}`);
-        });
+        }).then(this._handleResponseStatus);
     }
 
     editUserInfo({ name, about }) {
@@ -24,12 +27,7 @@ export default class API {
                 name: name,
                 about: about
             })
-        }).then(response => {
-            if (response.ok) {
-                return response.json();
-            }
-            return Promise.reject(`Error: ${response.status}`);
-        });
+        }).then(this._handleResponseStatus);
     }
 
     getInitialCards() {
@@ -37,12 +35,7 @@ export default class API {
             method: 'GET',
             headers: this._headers,
         })
-            .then((res) => {
-                if (res.ok) {
-                    return res.json();
-                }
-                return Promise.reject(`Error: ${res.status}`)
-            })
+            .then(this._handleResponseStatus)
     }
 
     addCard({ name, link }) {
@@ -54,13 +47,7 @@ export default class API {
                 link: link
             })
         })
-            .then((res) => {
-                console.log(res);
-                if (res.ok) {
-                    return res.json();
-                }
-                return Promise.reject(`Error: ${res.status}`)
-            })
+            .then(this._handleResponseStatus)
     }
 
     deleteCard(cardID) {
@@ -68,12 +55,7 @@ export default class API {
             method: 'DELETE',
             headers: this._headers,
         })
-            .then((res) => {
-                if (res.ok) {
-                    return res.json();
-                }
-                return Promise.reject(`Error: ${res.status}`)
-            })
+            .then(this._handleResponseStatus)
     }
 
     addLike(cardID) {
@@ -81,12 +63,7 @@ export default class API {
             method: 'PUT',
             headers: this._headers,
         })
-            .then((res) => {
-                if (res.ok) {
-                    return res.json();
-                }
-                return Promise.reject(`Error: ${res.status}`)
-            })
+            .then(this._handleResponseStatus)
     }
 
     deleteLike(cardID) {
@@ -94,12 +71,18 @@ export default class API {
             method: 'DELETE',
             headers: this._headers,
         })
-            .then((res) => {
-                if (res.ok) {
-                    return res.json();
-                }
-                return Promise.reject(`Error: ${res.status}`)
-            })
+            .then(this._handleResponseStatus)
+    }
+
+    changeAvatar(data) {
+        return fetch(`${this._baseURL}/users/me/avatar`, {
+            method: 'PATCH',
+            headers: this._headers,
+            body: JSON.stringify({
+                avatar: data.userAvatar
+            }),
+        })
+            .then(this._handleResponseStatus)
     }
 
 }
